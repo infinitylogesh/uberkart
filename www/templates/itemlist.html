@@ -1,0 +1,12 @@
+<ion-content>
+<div class="bar bar-subheader">
+  <h2 class="title">Item List</h2>
+</div>
+<ion-list class="list inset-list has-subheader" can-swipe="true" option-buttons="itemButtons" >
+<ion-item ng-repeat="item in items">
+	<p><span class="itemname">{{item.name}}</span><i class="icon ion-ios-plus" ng-show="toggleEditQty[$index]||false" ng-click="increaseQty($index)"></i><span class="quantity">x {{item.qty}}</span><i class="icon ion-ios-minus" ng-show="toggleEditQty[$index]||false" ng-click="decreaseQty($index)"></i><span class="price">Rs.{{item.price * item.qty}}</span></p>
+	 <ion-option-button class="button button-positive" ng-click="editItem($index)"><i class="icon ion-edit"></i></ion-option-button>
+</ion-item>
+<ion-item class="item item-divider"><p>Total<span class="price">Rs.{{total}}</span></p></ion-item>
+</ion-list>
+</ion-content>
