@@ -8,7 +8,7 @@ angular.module('uberKart',['ionic'])
 	// Socket connection is established with the given namespace.
 	serviceInstance.initializeSocket = function(namespace){
 
-	var host = 'http://52.88.133.190/',
+	var host = 'http://52.11.233.164:8080/',
 	socketUrl = host + namespace,
 	socket = io.connect(socketUrl);
 	console.log(socket);
