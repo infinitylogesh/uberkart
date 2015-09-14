@@ -14,7 +14,7 @@ for (var i = 0; i <= 10; i++) {
 
 /* mySql Connection declaration/initialisiation */
 var connection = mysql.createConnection({
-    host: 'localhost',
+    host: 'localhost',  
     user: 'root',
     password: 'uberkart',
     database: 'uberkart'
