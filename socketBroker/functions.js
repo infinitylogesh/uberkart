@@ -5,7 +5,7 @@
     emits the results to concerned namespace socket
 */
 exports.getUpcDetails = function(upc,res,connection,nsp) {
-    var sqlQuery = "SELECT * FROM products WHERE upc = " + upc;
+    var sqlQuery = "SELECT * FROM products WHERE upc ='" + upc + "'";
     connection.query(sqlQuery, function(err, rows) {
         if (err) {
             console.log("mySql Querry error",err);

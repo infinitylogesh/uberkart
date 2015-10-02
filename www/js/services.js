@@ -4,48 +4,62 @@ angular.module('uberKart', ['ionic'])
 
     var serviceInstance = {};
 
-    var promotions = [
-        {   promotion : "buy1get1",
-            eligibleQty: 1,
-            freeQty: 1
-        },
-        {   promotion : "buy2get1",
-            eligibleQty: 2,
-            freeQty: 1
-        }
-    ];
+    // ------
+    /* Stubs */
+    // ------
+
+
+    var promotions = [{
+        promotion: "buy1get1",
+        eligibleQty: 1,
+        freeQty: 1,
+        promotionText:"Buy 1 and Get 1 Free"
+    }, {
+        promotion: "buy2get1",
+        eligibleQty: 2,
+        freeQty: 1,
+        promotionText:"Buy 2 and Get 1 Free"
+    }];
+
+    // ---------
+    /* Stubs End */
+    // ---------
 
     var itemsWithPromotion = [],
-    serviceInstance = {
-        promotionAmountToBeReduced : 0
-    };
+        serviceInstance = {
+            promotionAmountToBeReduced: 0
+        };
 
     // Socket connection is established with the given namespace.
     serviceInstance.initializeSocket = function(namespace) {
 
-        var host = 'http://52.88.172.174:8080/',
+        var host = 'http://52.26.96.210:8080/',
             socketUrl = host + namespace,
             socket = io.connect(socketUrl);
         console.log(socket);
         return socket
     }
 
+
+    /*  --------------- */
+    /*  Promotion Start */
+    /*  --------------- */
+
     // items with promotions are added to a seperate array
-    serviceInstance.updateItemsWithPromotions = function(newItem){
-            var item = {};
-            item.upc = newItem.upc;
-            item.promotions = newItem.promotions;
-            itemsWithPromotion.push(item);
-            console.log(itemsWithPromotion);
+    serviceInstance.updateItemsWithPromotions = function(newItem) {
+        var item = {};
+        item.upc = newItem.upc;
+        item.promotions = newItem.promotions;
+        itemsWithPromotion.push(item);
+        console.log(itemsWithPromotion);
     }
 
     //  check if the given UPC has promotion
-    serviceInstance.checkItemHasPromotion = function(item){
-        if(item.promotions.length>0){
+    serviceInstance.checkItemHasPromotion = function(item) {
+        if (item.promotions.length > 0) {
             console.log(item.promotions);
             return item.promotions;
-        }
-        else{
+        } else {
             return false;
         }
 
@@ -56,46 +70,49 @@ angular.module('uberKart', ['ionic'])
         for (var x = 0; x < promotions.length; x++) {
             if (promotions[x].promotion == promotionName) {
                 return promotions[x];
-            } 
+            }
         }
 
         console.log("Promotion not found");
     }
 
 
-    // based on the quanity added , this function determines the amount to be reduced.
-    serviceInstance.isItemEligibleForPromotion = function(promotionsReturned,itemQty){
+    // based on the quanity added , this function determines the free quantities applicable .
+    serviceInstance.returnEligibleFreeQty = function(promotionsReturned, itemQty) {
         var self = this;
-        console.log(itemQty,"is eligible");
-        for(var x=0;x<promotionsReturned.length;x++){
-                var promotionDefinition = self.getPromotionDefinition(promotionsReturned[x]),
-                promotionRatio = promotionDefinition.eligibleQty/(promotionDefinition.eligibleQty+promotionDefinition.freeQty),
-                numberOfQtyPromotionEligible = itemQty - (itemQty*promotionRatio);
-                console.log("numberOfQtyPromotionEligible",numberOfQtyPromotionEligible);
-                if(numberOfQtyPromotionEligible%1==0){
-                    return (numberOfQtyPromotionEligible*promotionDefinition.freeQty);  /*Retrun amount to be deducted.*/
-                }
-            }
-
-            return false;
+        console.log(itemQty, "is eligible");
+        for (var x = 0; x < promotionsReturned.length; x++) {
+            var promotionDefinition = self.getPromotionDefinition(promotionsReturned[x]),
+                promotionRatio = promotionDefinition.eligibleQty / (promotionDefinition.eligibleQty + promotionDefinition.freeQty),
+                numberOfQtyPromotionEligible = Math.floor(itemQty - (itemQty * promotionRatio));
+            console.log("numberOfQtyPromotionEligible", numberOfQtyPromotionEligible);
+            return (numberOfQtyPromotionEligible * promotionDefinition.freeQty); /*Retrun amount to be deducted.*/
+        }
     }
 
     // apply promotion 
     // ISSUE : Reducing Item in the UI with promotion is faulty.
-    serviceInstance.applyPromotion = function(item,$scope){
+    serviceInstance.applyPromotion = function(item, $scope) {
         var self = this,
-        promotionsReturned = self.checkItemHasPromotion(item),
-        compareResult = self.compareList(item,$scope.items);
-        $scope.items[compareResult].promotionAmountToBeReduced = 0;
-        if(promotionsReturned){
+            promotionsReturned = self.checkItemHasPromotion(item),
+            compareResult = self.compareList(item, $scope.items);
+        $scope.items[compareResult].promotionAmountToBeReduced = (typeof $scope.items[compareResult].promotionAmountToBeReduced === "undefined") ? 0 : $scope.items[compareResult].promotionAmountToBeReduced;
+        if (promotionsReturned) {
             console.log(promotionsReturned);
             self.updateItemsWithPromotions(item);
-            var numberOfItemsToReduce = self.isItemEligibleForPromotion(promotionsReturned,$scope.items[compareResult].qty);
-            console.log("numberOfItemsToReduce",numberOfItemsToReduce);
-            $scope.items[compareResult].promotionAmountToBeReduced = (numberOfItemsToReduce!=false)?(numberOfItemsToReduce*item.price):$scope.items[compareResult].promotionAmountToBeReduced;
-            console.log("$scope.items[compareResult].promotionAmountToBeReduced",$scope.items[compareResult].promotionAmountToBeReduced);
+            var numberOfItemsToReduce = self.returnEligibleFreeQty(promotionsReturned, $scope.items[compareResult].qty);
+            console.log("numberOfItemsToReduce", numberOfItemsToReduce);
+            $scope.items[compareResult].promotionAmountToBeReduced = numberOfItemsToReduce * item.price;
+            $scope.items[compareResult].promotionText = self.getPromotionDefinition(item.promotions[0]).promotionText;
+            console.log("$scope.items[compareResult].promotionAmountToBeReduced", $scope.items[compareResult].promotionAmountToBeReduced);
         }
     }
+
+    /*  ------------- */
+    /*  Promotion End */
+    /*  ------------- */
+
+
 
     // On arrival of the new item from the cart , UpdateList function is called
     // Update the list based on the content.
@@ -107,7 +124,8 @@ angular.module('uberKart', ['ionic'])
             console.log("socket on");
             socket.on('clientMessage', function(msg) {
                 console.log(msg);
-                msg.promotions = ["buy2get1"];
+                msg.promotions = ["buy1get1"];
+                console.log(Date());
                 $scope.$apply(self.updateList(msg, $scope)); // to update the binding changes in the UI 
             });
         });
@@ -130,11 +148,11 @@ angular.module('uberKart', ['ionic'])
     // calculates the total price of the item in the array of objects ( itemlist )
     serviceInstance.calculateItemTotal = function(itemList) {
         var total = 0,
-        self = this;
+            self = this;
         for (i = 0; i < itemList.length; i++) {
             total += ((itemList[i].qty * itemList[i].price) - itemList[i].promotionAmountToBeReduced);
             console.log(itemList);
-            console.log("gross total",total);
+            console.log("gross total", total);
         }
         return total;
     }
@@ -144,7 +162,7 @@ angular.module('uberKart', ['ionic'])
 
         var self = this,
             itemList = $scope.items,
-            amountToBeReduced=0,
+            amountToBeReduced = 0,
             compareResult = -1;
         // No need to compare if it is the first item.
         if (itemList.length > 0) {
@@ -158,7 +176,7 @@ angular.module('uberKart', ['ionic'])
         } else {
             itemList.push(newItem);
         }
-        self.applyPromotion(newItem,$scope);
+        self.applyPromotion(newItem, $scope);
         $scope.total = this.calculateItemTotal($scope.items);
         return $scope;
 

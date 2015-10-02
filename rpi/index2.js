@@ -16,6 +16,6 @@ app.get('/app2', function(req, res){
 res.sendfile(__dirname+'/index2.html');
 });
 
-server.listen(8080,function(){
+server.listen(80,function(){
 	console.log("listnening 3000");
 });

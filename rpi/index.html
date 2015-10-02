@@ -16,7 +16,7 @@
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
     $( document ).ready(function() {
-        var socket = io.connect('http://52.88.172.174:8080');        
+        var socket = io.connect('http://afc6e367.ngrok.io');        
         $('form').submit(function(){
           var value = $('#m').val(),
           message = value.split(" ");
@@ -28,7 +28,7 @@
         
     </script>
     <script type="text/javascript">
-      var socket2 = io.connect('http://52.88.172.174:8080/nsp1');
+      var socket2 = io.connect('http://afc6e367.ngrok.io');
       socket2.on('connect',function(){
         console.log("socket on");
         socket2.on('clientMessage',function(msg){

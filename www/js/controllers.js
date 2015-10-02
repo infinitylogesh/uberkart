@@ -8,6 +8,27 @@ angular.module('uberKart')
 
     $scope.total = 0;
 
+   /* var product1 = {
+        upc : 1234,
+        name : "SNICKERS",
+        price : 1,
+        qty : 1,
+        promotions :["buy1get1"]
+    };
+
+    var product2 = {
+        upc : 1235,
+        name : "MARS",
+        price : 1,
+        qty : 1,
+        promotions :[]
+    };
+
+    itemListService.updateList(product1,$scope);
+    itemListService.updateList(product2,$scope);*/
+
+    console.log(itemListService.product);
+
     // socket connection is established and newly recieved item are updated to the scope
     itemListService.listenForNewItem('nsp1',$scope);
 
@@ -26,8 +47,7 @@ angular.module('uberKart')
 
         // This function increaments the quantity of item by 1
         $scope.increaseQty = function($index) {
-            $scope.items[$index].qty++;
-            $scope.total = itemListService.calculateItemTotal($scope.items);
+            itemListService.updateList($scope.items[$index],$scope); /* Consider as if the item is added */
         }
 
         // This function decreaments the quantity of item by 1 and 
@@ -36,6 +56,7 @@ angular.module('uberKart')
 
             if ($scope.items[$index].qty >= 1) {
                 $scope.items[$index].qty--;
+                itemListService.applyPromotion($scope.items[$index],$scope);
                 $scope.total = itemListService.calculateItemTotal($scope.items);
             }
         }

@@ -6,6 +6,7 @@
 <ion-item ng-repeat="item in items">
 	<p><span class="itemname">{{item.name}}</span><i class="icon ion-ios-plus" ng-show="toggleEditQty[$index]||false" ng-click="increaseQty($index)"></i><span class="quantity">x {{item.qty}}</span><i class="icon ion-ios-minus" ng-show="toggleEditQty[$index]||false" ng-click="decreaseQty($index)"></i><span class="price">Rs.{{item.price * item.qty}}</span></p>
 	 <ion-option-button class="button button-positive" ng-click="editItem($index)"><i class="icon ion-edit"></i></ion-option-button>
+	 <p class="promo" ng-show="item.promotions.length>0"><span class="offerText">Offer</span><span class="promoText">{{item.promotionText}}</span><span class="promoValue" ng-show="item.promotionAmountToBeReduced>0">- Rs.{{item.promotionAmountToBeReduced}}</span> </p>
 </ion-item>
 <ion-item class="item item-divider"><p>Total<span class="price">Rs.{{total}}</span></p></ion-item>
 </ion-list>

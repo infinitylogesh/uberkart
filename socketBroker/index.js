@@ -30,6 +30,15 @@ connection.connect(function(err) {
     }
 });
 
+
+app.get('/',function(req,res){
+    console.log(req.query.upc);
+    functions.getUpcDetails(req.query.upc, " ", connection, functions.initializeNamespace(io, "nsp1"));
+    res.send("hi");
+});
+
+
+
 // [BUG] SQL CONNECTION END ISSUE - CONNECTIONS ARE NOT CLOSED AFTER QUERIES.
 
 // url ='http://52.69.119.194/garage/uberKart/logic.xsjs?transid=1245&cartid=12&UPC='+UPC+'&addorrem='+addorremove+'&timetaken=20',
@@ -46,7 +55,6 @@ connection.connect(function(err) {
 io.on('connection', function(socket) {
         console.log("Client connected");
         socket.on('message', function(msg) {
-
                 nsp = functions.initializeNamespace(io, msg[1]); /*  Namespace is dynamically generated for each request */
                 if (msg[0] == 'message') {
                     functions.getUpcDetails(msg[2], " ", connection, nsp);
