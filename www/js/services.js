@@ -1,6 +1,6 @@
 angular.module('uberKart', ['ionic'])
 
-.factory('itemListService', function() {
+.factory('itemListService', function($http) {
 
     var serviceInstance = {};
 
@@ -25,16 +25,17 @@ angular.module('uberKart', ['ionic'])
     /* Stubs End */
     // ---------
 
-    var itemsWithPromotion = [],
-        serviceInstance = {
+    var itemsWithPromotion = [];
+    var serviceInstance = {
             promotionAmountToBeReduced: 0
         };
+    var upcGetURL = "http://192.168.2.5:8000/?upc="
 
     // Socket connection is established with the given namespace.
     serviceInstance.initializeSocket = function(namespace) {
 
-        var host = 'http://52.26.96.210:8080/',
-            socketUrl = host + namespace,
+        var host = 'http://fb6889fd.ngrok.io/',
+            socketUrl = host,
             socket = io.connect(socketUrl);
         console.log(socket);
         return socket
@@ -119,14 +120,20 @@ angular.module('uberKart', ['ionic'])
     serviceInstance.listenForNewItem = function(namespace, $scope) {
 
         var self = this;
+        var upcDetails = {};
         socket = self.initializeSocket(namespace);
         socket.on('connect', function() {
             console.log("socket on");
             socket.on('clientMessage', function(msg) {
                 console.log(msg);
-                msg.promotions = ["buy1get1"];
                 console.log(Date());
-                $scope.$apply(self.updateList(msg, $scope)); // to update the binding changes in the UI 
+                $http.get(upcGetURL+msg).then(function(resp){
+                    upcDetails = resp.data;
+                    upcDetails.promotions = ["buy1get1"];
+                    self.updateList(upcDetails, $scope); // Without $scope.$apply , Be cautious to check the update the binding changes in the UI 
+                },function(err){
+                    console.log("Get Error",err);
+                });
             });
         });
 
