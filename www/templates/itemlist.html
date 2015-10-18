@@ -1,13 +1,29 @@
 <ion-content>
 <div class="bar bar-subheader">
-  <h2 class="title">Item List</h2>
-</div>
-<ion-list class="list inset-list has-subheader" can-swipe="true" option-buttons="itemButtons" >
-<ion-item ng-repeat="item in items">
-	<p><span class="itemname">{{item.name}}</span><i class="icon ion-ios-plus" ng-show="toggleEditQty[$index]||false" ng-click="increaseQty($index)"></i><span class="quantity">x {{item.qty}}</span><i class="icon ion-ios-minus" ng-show="toggleEditQty[$index]||false" ng-click="decreaseQty($index)"></i><span class="price">Rs.{{item.price * item.qty}}</span></p>
-	 <ion-option-button class="button button-positive" ng-click="editItem($index)"><i class="icon ion-edit"></i></ion-option-button>
-	 <p class="promo" ng-show="item.promotions.length>0"><span class="offerText">Offer</span><span class="promoText">{{item.promotionText}}</span><span class="promoValue" ng-show="item.promotionAmountToBeReduced>0">- Rs.{{item.promotionAmountToBeReduced}}</span> </p>
-</ion-item>
-<ion-item class="item item-divider"><p>Total<span class="price">Rs.{{total}}</span></p></ion-item>
-</ion-list>
-</ion-content>
+	<div class="subheader-holder">
+	<!-- ng-switch for notification is included in this template  -->
+	<div ng-include="'templates/notification.html'"></div>
+					<p class="total">
+				<span class="saveText">Saved</span>
+				<span class="saveAmt">${{amountSaved}}</span>
+				<span class="totalAmt">${{total}}</span>
+				<span class="totalText">Total</span>
+			</p>
+		</div>
+	</div>
+	<ion-list class="list inset-list has-subheader" can-swipe="true" option-buttons="itemButtons" >
+	<ion-item ng-repeat="item in items">
+	<p>
+		<span class="itemname">{{item.name}}</span>
+		<i class="icon ion-ios-plus" ng-show="toggleEditQty[$index]||false" ng-click="increaseQty($index)"></i>
+		<span class="price">${{item.price * item.qty}}</span>
+		<i class="icon ion-ios-minus" ng-show="toggleEditQty[$index]||false" ng-click="decreaseQty($index)"></i>
+		<span ng-class="quantityChanged[$index]" class="quantity">x {{item.qty}}</span></p>
+		<ion-option-button class="button editQty" ng-click="decreaseQty($index)"><i class="icon ion-minus-circled"></i></ion-option-button>
+		<i class="swipeIcon ion-ios-arrow-left"></i><i class="swipeIcon2 ion-ios-arrow-left"></i>
+		<p class="promo" ng-show="item.promotions.length>0">
+			<span class="promoText">{{item.promotionText}}</span>
+			<span class="promoValue" ng-show="item.promotionAmountToBeReduced>0">- ${{item.promotionAmountToBeReduced}}</span></p>
+			</ion-item>
+			</ion-list>
+			</ion-content>

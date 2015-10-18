@@ -1,31 +1,50 @@
 angular.module('uberKart')
 
 // This is the controller for itemlist.html page 
-.controller('ItemListController', ['$scope', '$ionicListDelegate', 'itemListService',
-    function($scope, $ionicListDelegate,itemListService) {
+.controller('ItemListController', ['$scope','$timeout', '$ionicListDelegate', 'itemListService',
+    function($scope,$timeout, $ionicListDelegate,itemListService) {
 
     $scope.items = [];
 
     $scope.total = 0;
 
-   /* var product1 = {
+    var product1 = {
         upc : 1234,
-        name : "SNICKERS",
+        name : "Snickers",
         price : 1,
         qty : 1,
-        promotions :["buy1get1"]
+        promotions :["buy2get1"]
     };
 
     var product2 = {
         upc : 1235,
-        name : "MARS",
+        name : "Mars",
         price : 1,
         qty : 1,
         promotions :[]
     };
 
+    var product3 = {
+        upc : 12345,
+        name : "Aasai",
+        price : 1,
+        qty : 1,
+        promotions :["buy1get1"]
+    };
+
+    var product3 = {
+        upc : 12345,
+        name : "Aasai",
+        price : 1,
+        qty : 1,
+        promotions :["buy1get1"]
+    };
+
+    
+
     itemListService.updateList(product1,$scope);
-    itemListService.updateList(product2,$scope);*/
+    itemListService.updateList(product2,$scope);
+    itemListService.updateList(product3,$scope);
 
     console.log(itemListService.product);
 
@@ -37,28 +56,51 @@ angular.module('uberKart')
     	// toggleEditQty is an array which holds the boolean value for all the list. 
     	// Initially the value for each list item will be 'ubdefined'
         $scope.toggleEditQty = [];
+        $scope.quantityChanged =[];
+        $scope.qtyDecreasing = false;
+        $scope.amountSaved = 0;
+
+
 
         // This function toggles the plus and minus icons and closes the swiped list item. 
         $scope.editItem = function($index) {
             console.log($scope.toggleEditQty[$index] || false);
             $scope.toggleEditQty[$index] = !$scope.toggleEditQty[$index];
-            $ionicListDelegate.closeOptionButtons();
+            //$ionicListDelegate.closeOptionButtons();
         }
 
         // This function increaments the quantity of item by 1
         $scope.increaseQty = function($index) {
             itemListService.updateList($scope.items[$index],$scope); /* Consider as if the item is added */
+            console.log($scope.notificationCase);
+            // To highlight the change in quantity. Class will be removed after the timeout. 
+            $scope.quantityChanged[$index] = "quantity-animation";
+            $timeout(function() {
+                $scope.quantityChanged[$index] = null;
+            }, 200);
         }
 
         // This function decreaments the quantity of item by 1 and 
         // it cannot be less than zero
         $scope.decreaseQty = function($index) {
+            
+            $scope.toggleEditQty[$index] = !$scope.toggleEditQty[$index]; // stub to enable add and reduce quantity button. Remove it.
+
+            $scope.qtyDecreasing = true;
 
             if ($scope.items[$index].qty >= 1) {
+                itemListService.notifyProductRemoval($scope,$scope.items[$index]);
                 $scope.items[$index].qty--;
                 itemListService.applyPromotion($scope.items[$index],$scope);
                 $scope.total = itemListService.calculateItemTotal($scope.items);
+                $scope.amountSaved = itemListService.calculateTotalAmountSaved($scope.items);
             }
+
+            // To highlight the change in quantity. Class will be removed after the timeout. 
+            $scope.quantityChanged[$index] = "quantity-animation";
+            $timeout(function() {
+                $scope.quantityChanged[$index] = null;
+            }, 200);
         }
 
 
