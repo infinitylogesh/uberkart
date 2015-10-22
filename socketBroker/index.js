@@ -36,6 +36,6 @@ app.get('/',function(req,res){
 
 /* Server runs at 8080 port */
 
-server.listen(8000, function() {
-    console.log("listnening 3000");
+server.listen(80, function() {
+    console.log("listnening port 80");
 });

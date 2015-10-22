@@ -32,19 +32,72 @@ angular.module('uberKart')
         promotions :["buy1get1"]
     };
 
-    var product3 = {
-        upc : 12345,
+    var product4 = {
+        upc : 123456,
         name : "Aasai",
         price : 1,
         qty : 1,
         promotions :["buy1get1"]
     };
 
+    var product5 = {
+        upc : 12346,
+        name : "Aasai",
+        price : 1,
+        qty : 1,
+        promotions :["buy1get1"]
+    };
+
+    var product6 = {
+        upc : 1236,
+        name : "Aasai",
+        price : 1,
+        qty : 1,
+        promotions :["buy1get1"]
+    };
+
+    var product8 = {
+        upc : 1231,
+        name : "Aasai",
+        price : 1,
+        qty : 1,
+        promotions :["buy1get1"]
+    };
+
+    var product7 = {
+        upc : 11,
+        name : "Aasai",
+        price : 1,
+        qty : 1,
+        promotions :["buy1get1"]
+    };
+
+    var product9 = {
+        upc : 123112,
+        name : "Aasai",
+        price : 1,
+        qty : 1,
+        promotions :["buy1get1"]
+    };
+
+
     
 
     itemListService.updateList(product1,$scope);
     itemListService.updateList(product2,$scope);
     itemListService.updateList(product3,$scope);
+    itemListService.updateList(product4,$scope);
+    itemListService.updateList(product5,$scope);
+    itemListService.updateList(product6,$scope);
+    itemListService.updateList(product7,$scope);
+    itemListService.updateList(product8,$scope);
+        itemListService.updateList(product9,$scope);
+
+
+
+
+
+    
 
     console.log(itemListService.product);
 

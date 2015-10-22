@@ -1,4 +1,3 @@
-<ion-content>
 <div class="bar bar-subheader">
 	<div class="subheader-holder">
 	<!-- ng-switch for notification is included in this template  -->
@@ -11,6 +10,8 @@
 			</p>
 		</div>
 	</div>
+<ion-content>
+
 	<ion-list class="list inset-list has-subheader" can-swipe="true" option-buttons="itemButtons" >
 	<ion-item ng-repeat="item in items">
 	<p>
@@ -26,4 +27,5 @@
 			<span class="promoValue" ng-show="item.promotionAmountToBeReduced>0">- ${{item.promotionAmountToBeReduced}}</span></p>
 			</ion-item>
 			</ion-list>
-			</ion-content>
+			</ion-content> 
+  		<button class="button"><i class="icon ion-ios-cart-outline"></i></button> 

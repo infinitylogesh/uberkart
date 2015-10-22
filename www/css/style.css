@@ -242,7 +242,7 @@ div.bar-subheader .subheader-holder p.total span.totalAmt{
 
 
 .has-subheader {
-    top: 14.11em;
+    top: 11em;
 }
 
 .item-content{
@@ -255,7 +255,7 @@ div.bar-subheader .subheader-holder p.total span.totalAmt{
 ion-item.item {
 	border-color: #B7ADAD;
 	border-width: 0.1em;
-	height: 5.3em;
+	height: 4.6em;
 }
 
 ion-item.item-divider.item{
@@ -315,6 +315,7 @@ ion-item.item-divider.item{
 .item-content > p{
 	width: 100%;
 	font-size: 0.8em;
+	margin-top: -0.3em;
 }
 
 .item-content > p .ion-ios-minus{
@@ -375,5 +376,24 @@ ion-item.item-divider.item{
 .item-content >p span.promoValue{
 	display: inline-block;
 	float:right;
+}
+
+.bar-footer{
+	color: #FFF;
+}
+
+.checkout-button{
+	width: 4em;
+	height: 4em;
+	border-radius: 50%;
+	background-color: #E52429;
+	color:#F4F4F4 !important;
+	position: fixed;
+	bottom: 2em;
+	right: 4em;
+	z-index: 10;
+	-webkit-box-shadow: 0.1em 0.1em 0.4em 0px rgba(0,0,0,0.4);
+-moz-box-shadow: 0.1em 0.1em 0.4em 0px rgba(0,0,0,0.4);
+box-shadow: 0.1em 0.1em 0.4em 0px rgba(0,0,0,0.4);
 }
 
