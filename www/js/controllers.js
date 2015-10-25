@@ -86,12 +86,7 @@ angular.module('uberKart')
     itemListService.updateList(product1,$scope);
     itemListService.updateList(product2,$scope);
     itemListService.updateList(product3,$scope);
-    itemListService.updateList(product4,$scope);
-    itemListService.updateList(product5,$scope);
-    itemListService.updateList(product6,$scope);
-    itemListService.updateList(product7,$scope);
-    itemListService.updateList(product8,$scope);
-        itemListService.updateList(product9,$scope);
+    
 
 
 
