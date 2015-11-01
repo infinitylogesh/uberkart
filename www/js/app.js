@@ -9,6 +9,9 @@ angular.module('uberKart')
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
+    console.log("device and ionic ready");
+    // NFC listener is added in advance as fix for double NFC tap issue ( NFC was read only during second tap).
+    nfc.addNdefListener(function(nfcEvent) {}, function() {}, function(error) {});
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }

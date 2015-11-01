@@ -29,6 +29,7 @@ var upc = null;
 
 app.get('/',function(req,res){
     console.log(req.query.upc);
+    console.log(req.connection.remoteAddress);
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     functions.getUpcDetails(req.query.upc,res);  // Gets the UPC details and sends the response as json.

@@ -23,8 +23,9 @@ barcodeScanner.stdout.on('data',function(data){
 
 io.on('connection',function(socket){
 	console.log("client connected");
+	io.emit("handshake","helloApp");
 });
 
 server.listen(8080,function(){
-	console.log("listnening 3000");
+	console.log("listnening 8080");
 });

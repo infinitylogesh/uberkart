@@ -447,7 +447,7 @@ ion-item.item-divider.item{
 #paymentPage .total{
 	display: block;
 	font-size: 2em;
-	margin-left: 0.3em;
+	margin-left: 1.5em;
 	margin-top: 0.5em;
 	color:#e7e7e7;
 }
@@ -556,11 +556,11 @@ ion-item.item-divider.item{
   	left: 50%;
   	transform: translate(-50%, -50%);
 
-  			-webkit-box-shadow: 0em 0em 2em 0px rgb(171, 13, 17);
-    	 -moz-box-shadow: 0em 0em 2em 0px rgb(171, 13, 17);
-     	 box-shadow: 0em 0em 2em 0px rgb(171, 13, 17);
-    -webkit-animation: shadowAnimation 1200ms linear infinite;
-  	animation: shadowAnimation 1200ms linear  infinite;
+  	-webkit-box-shadow: 0em 0em 2em 0px #272727;
+   	-moz-box-shadow: 0em 0em 2em 0px #272727;
+     box-shadow: 0em 0em 2em 0px #272727;
+    /*-webkit-animation: shadowAnimation 1200ms linear infinite;
+  	animation: shadowAnimation 1200ms linear  infinite;*/
 }
 
 @-webkit-keyframes shadowAnimation{
@@ -632,6 +632,23 @@ keyframes shadowAnimation{
 	line-height: 1.4em;
 }
 
+.popup-container .popup, .popup-title{
+	background-color: #272727;
+	color:#e7e7e7;
+}
+
+.popup .button{
+	background-color: #e7e7e7;
+	border-color: #e7e7e7;
+	color: #272727;
+}
+
+.popup .button.activated{
+	background-color: #272727;
+	border-color: #e7e7e7;
+	color: #e7e7e7;
+}
+
 
 /*  Home page */
 
@@ -644,7 +661,7 @@ keyframes shadowAnimation{
 }
 
 #homePage .logoHolder{
-	height:70%;
+	height:80%;
 	width: 100%;
 	background-color: #272727;
 	position: fixed;

@@ -1,6 +1,6 @@
 angular.module('uberKart', ['ionic', 'ngAnimate'])
 
-.factory('itemListService', function($http, $timeout) {
+.factory('itemListService', function($http, $timeout,$q) {
 
     var serviceInstance = {};
 
@@ -27,7 +27,8 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
 
     var itemsWithPromotion = [];
     var serviceInstance = {
-        promotionAmountToBeReduced: 0
+        promotionAmountToBeReduced: 0,
+        total: 0
     };
 
     // Notification Icon constants
@@ -39,15 +40,6 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
 
     var upcGetURL = "http://192.168.2.5:8000/?upc="
 
-    // Socket connection is established with the given namespace.
-    serviceInstance.initializeSocket = function(namespace) {
-
-        var host = 'http://fb6889fd.ngrok.io/',
-            socketUrl = host,
-            socket = io.connect(socketUrl);
-        console.log(socket);
-        return socket
-    }
 
     /*  ------------------  */
     /*  Notification Start */
@@ -219,7 +211,8 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
 
         var self = this;
         var upcDetails = {};
-        socket = self.initializeSocket(namespace);
+        socket = $scope.socket;
+        console.log("$scope.socket",$scope.socket);
         socket.on('connect', function() {
             console.log("socket on");
             socket.on('clientMessage', function(msg) {
@@ -259,6 +252,7 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
             console.log(itemList);
             console.log("gross total", total);
         }
+        serviceInstance.total = total;
         return total;
     }
 
@@ -294,6 +288,13 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
         $scope.amountSaved = self.calculateTotalAmountSaved($scope.items);
         return $scope;
 
+    }
+
+    serviceInstance.passTotal2Payment = function(){
+        var dfd = $q.defer(),
+        self = this;
+        dfd.resolve(self.total);
+        return dfd.promise;
     }
 
     return serviceInstance;

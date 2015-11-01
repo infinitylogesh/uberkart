@@ -1,10 +1,12 @@
 angular.module('uberKart')
 
 // This is the controller for itemlist.html page 
-.controller('ItemListController', ['$scope','$timeout', '$ionicListDelegate', 'itemListService',
-    function($scope,$timeout, $ionicListDelegate,itemListService) {
-
+.controller('ItemListController', ['$scope','$timeout', '$ionicListDelegate', 'itemListService','pairSocket',
+    function($scope,$timeout, $ionicListDelegate,itemListService,pairSocket) {
+        
     $scope.items = [];
+
+    $scope.socket = pairSocket; // Socket receieved from pair state.
 
     $scope.total = 0;
 
@@ -81,19 +83,9 @@ angular.module('uberKart')
     };
 
 
-    
-
     itemListService.updateList(product1,$scope);
     itemListService.updateList(product2,$scope);
     itemListService.updateList(product3,$scope);
-    
-
-
-
-
-
-    
-
     console.log(itemListService.product);
 
     // socket connection is established and newly recieved item are updated to the scope

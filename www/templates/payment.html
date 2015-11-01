@@ -1,9 +1,9 @@
-<ion-view>
+<ion-view hide-nav-bar="false">
 <div id="paymentPage">
 	<div class="bar bar-subheader">
 		<div class="subheader-holder">
 		<!-- ng-switch for notification is included in this template  -->
-		<p><span class="total">$124.00</span>
+		<p><span class="total">${{total}}</span>
 			<span class = "totalText">Amount to be paid</span>
 		</p>
 		</div>
@@ -35,7 +35,7 @@
 	</div>
 
 	</ion-content> 
-	<button class="button button-block">
+	<button class="button button-block" ng-click="pay()">
   <i class="icon ion-ios-checkmark"></i>Pay
 </button>
 </div>
