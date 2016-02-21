@@ -38,7 +38,7 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
         info: "ion-information-circled"
     };
 
-    var upcGetURL = "http://192.168.2.5:8000/?upc="
+    var upcGetURL = "http://lilthings.co:8000/?upc="
 
 
     /*  ------------------  */
@@ -213,20 +213,17 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
         var upcDetails = {};
         socket = $scope.socket;
         console.log("$scope.socket",$scope.socket);
-        socket.on('connect', function() {
-            console.log("socket on");
             socket.on('clientMessage', function(msg) {
                 console.log(msg);
                 console.log(Date());
                 $http.get(upcGetURL + msg).then(function(resp) {
                     upcDetails = resp.data;
-                    upcDetails.promotions = ["buy1get1"];
+                    console.log(upcDetails);
                     self.updateList(upcDetails, $scope); // Without $scope.$apply , Be cautious to check the update the binding changes in the UI 
                 }, function(err) {
                     console.log("Get Error", err);
                 });
             });
-        });
 
     }
 

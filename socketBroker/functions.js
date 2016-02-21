@@ -18,7 +18,7 @@
                 price: rows[0].price
             }
             res.header("Access-Control-Allow-Origin", "*");
-            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requestved-With, Content-Type, Accept");
             res.jsonp(body);
             // connection.end();
         }
@@ -29,20 +29,47 @@
 
 
 var products = [{
-    upc: "x0008vjm2b",
-    name: "Snickers",
+    upc: "8908001158305",
+    name: "Fogg Spray",
     qty: 1,
-    price: 1
+    price: 2,
+    promotions:[] // promotions: ["buy1get1"]
 }, {
-    upc: "8902968040208",
-    name: "Mars",
+    upc: "8901526104680",
+    name: "Loreal Paris",
     qty: 1,
-    price: 0.50
+    price: 0.50,
+    promotions:["buy1get1"]
 }, {
-    upc: "500066000815",
-    name: "Aasai",
+    upc: "8901491101820",
+    name: "Lays Chips",
     qty: 1,
-    price: 0.50
+    price: 0.50,
+    promotions:[]
+},{
+    upc: "8902080104093",
+    name: "Pepsi 500ML",
+    qty: 1,
+    price: 0.99,
+    promotions:[]
+},{
+    upc: "8901030515026",
+    name: "Surf Powder",
+    qty: 1,
+    price: 1.99,
+    promotions:[]
+},{
+    upc: "8902080404094",
+    name: "Tropicana",
+    qty: 1,
+    price: 1.99,
+    promotions:[]
+},{
+    upc: "8901499008459",
+    name: "Keloggs",
+    qty: 1,
+    price: 1,
+    promotions:[]
 }];
 
 exports.getUpcDetails = function(upc,res){

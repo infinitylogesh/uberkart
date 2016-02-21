@@ -430,6 +430,40 @@ ion-item.item-divider.item{
     display: inline-block;
 }
 
+#itemList .scroll{  /* to fix centering of empty list placeholder*/
+	height: 100%;
+}
+
+#itemList .list{ /* to fix scroll 100% */
+	margin-top: 11em;
+}
+
+.emptyListPlaceholder{  /* Placeholder text when itemlist is empty */
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	margin-top: -11em;
+	position: absolute;
+	color:#bbb;
+}
+
+.emptyListPlaceholder p{
+	text-align: center;
+}
+
+.emptyListPlaceholder p i{
+	font-size: 8em;
+	display: block;
+}
+
+.emptyListPlaceholder p i.can{
+	font-size: 2em;
+	display: block;
+	margin-left: 0.5em;
+	margin-bottom: -0.6em;
+	-webkit-transform: rotate(-15deg);
+}
+
 /* Payment page */
 
 #paymentPage .bar-subheader{
@@ -530,10 +564,23 @@ ion-item.item-divider.item{
 	background-color: #272727
 }
 
+.loadingPopup .popup-head{
+	display:none;
+}
+
+.loadingPopup .popup, .loadingPopup .popup .popup-title{
+	width:4em;
+	background:rgba(0, 0, 0, 0) !important;
+}
+
+.loadingSpinner{
+	stroke: #fff;
+}
+
 /* Pair page */
 
 #pairPage ion-content{
-	background-color: #e7e7e7;
+	background-color: #272727;
 }
 
 #pairPage .scroll{ /* To accomadate child of scroll to 100% width */ 
@@ -543,24 +590,50 @@ ion-item.item-divider.item{
 #pairPage .tapHolder{
 	width:100%;
 	height: 100%;
-	position: fixed;
+	position: absolute;
 }
 
 #pairPage .tapCircle{
-	width:14em;
-	height: 14em;
-	border-radius: 7em;
-	background-color: #272727;
+	width:13em;
+	height: 13em;
+	border-radius: 6.5em;
+	background-color: #FBFAFA;
 	position: absolute;
-	top: 50%;
+	top: 75%;
   	left: 50%;
   	transform: translate(-50%, -50%);
 
-  	-webkit-box-shadow: 0em 0em 2em 0px #272727;
+  	/*-webkit-box-shadow: 0em 0em 2em 0px #272727;
    	-moz-box-shadow: 0em 0em 2em 0px #272727;
-     box-shadow: 0em 0em 2em 0px #272727;
+     box-shadow: 0em 0em 2em 0px #272727;*/
     /*-webkit-animation: shadowAnimation 1200ms linear infinite;
   	animation: shadowAnimation 1200ms linear  infinite;*/
+}
+
+#pairPage .tapIcon{
+    font-size: 6em;
+    width: 3em;
+    /* margin-right: 0.8em; */
+    margin-top: 0.5em;
+    margin-left: -0.5em;
+    color: #FBFAFA;
+    display: inline-block;
+    top: 20%;
+    left: 60%;
+    transform: translate(-35%, -60%);
+    position: absolute;
+}
+
+#pairPage .tapIcon i.ion-arrow-swap{
+	font-size: 0.4em;
+	margin-left: -0.4em;
+    vertical-align: middle;
+    margin-top: -0.5em;
+}
+
+#pairPage .tapIcon i{
+	display: inline-block;
+	margin-right: 0.6em;
 }
 
 @-webkit-keyframes shadowAnimation{
@@ -622,14 +695,23 @@ keyframes shadowAnimation{
 
 }
 
+#pairPage i.ion-ios-more{
+	top: 48%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+  	position: absolute;
+  	font-size: 3em;
+  	color:#e7e7e7;
+}
+
 #pairPage .tapCircle p{
-	font-size: 1.5em;
-	width: 6em;
-	color: #e7e7e7;
-	margin-top: 2em;
-	margin-left: 1.6em;
-	text-align: center;
-	line-height: 1.4em;
+	font-size: 1.4em;
+    width: 6em;
+    color: #272727;
+    margin-top: 1.8em;
+    margin-left: 1.5em;
+    text-align: center;
+    line-height: 1.4em;
 }
 
 .popup-container .popup, .popup-title{
@@ -665,9 +747,9 @@ keyframes shadowAnimation{
 	width: 100%;
 	background-color: #272727;
 	position: fixed;
-	-webkit-box-shadow: 0.1em 0.1em 0.4em 0px rgba(0,0,0,0.4);
+	/*-webkit-box-shadow: 0.1em 0.1em 0.4em 0px rgba(0,0,0,0.4);
     -moz-box-shadow: 0.1em 0.1em 0.4em 0px rgba(0,0,0,0.4);
-     box-shadow: 0.1em 0.1em 0.4em 0px rgba(0,0,0,0.4);
+     box-shadow: 0.1em 0.1em 0.4em 0px rgba(0,0,0,0.4);*/
 }
 
 #homePage .logo{
@@ -722,9 +804,9 @@ keyframes shadowAnimation{
 	height: 20%;
 	position: fixed;
 	background-color: #272727;
-	-webkit-box-shadow: -0.1em -0.1em 0.4em 0px rgba(0,0,0,0.4);
+	/*-webkit-box-shadow: -0.1em -0.1em 0.4em 0px rgba(0,0,0,0.4);
     -moz-box-shadow: -0.1em -0.1em 0.4em 0px rgba(0,0,0,0.4);
-     box-shadow: -0.1em -0.1em 0.4em 0px rgba(0,0,0,0.4);
+     box-shadow: -0.1em -0.1em 0.4em 0px rgba(0,0,0,0.4);*/
 }
 
 #homePage .savedCounter{
@@ -761,3 +843,38 @@ font-size: 1.5em;
 	color:#e7e7e7;
 	/*margin-left: 2em;*/
 }
+
+/* Payment success page  */
+/*   					*/
+
+#paymentSuccessPage ion-content{
+	background-color: #272727;
+}
+
+#paymentSuccessPage .scroll{
+	height: 100%;
+}
+
+#paymentSuccessPage .successMessage{
+	width:20em;
+	text-align: center;
+	color: #e7e7e7;
+	font-size: 1.5em;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	position: absolute;
+}
+
+#paymentSuccessPage .successMessage i{
+	font-size: 1.1em;
+	margin-right: 0.3em;
+	color: #5CC55C;
+}
+
+#paymentSuccessPage .successMessage span{
+	font-size: 0.8em;
+	display: inline-block;
+	margin-top: 0.6em;
+}
+

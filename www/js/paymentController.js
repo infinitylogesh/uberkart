@@ -1,24 +1,27 @@
 angular.module('uberKart')
 
 // This is the controller for payment.html page 
-.controller('paymentController', ['$scope','$ionicPopup','$timeout','total',
-    function($scope,$ionicPopup,$timeout, total) {
+.controller('paymentController', ['$scope','$state','$ionicPopup','$timeout','total',
+    function($scope,$state,$ionicPopup,$timeout, total) {
     	$scope.total = total;
 
     	$scope.paymentSuccessPopup = function(){
-    		var paymentSuccess = $ionicPopup.alert({
-    			title: 'Payment Success!',
-    			template : 'Thank you for shopping with us'
+    		var loadingPopup = $ionicPopup.show({
+    			template : '<ion-spinner icon="crescent" class="loadingSpinner"></ion-spinner>',
+    			cssClass : 'loadingPopup'
     		});
 
-    		return paymentSuccess;
+    		return loadingPopup;
     	};
 
     	$scope.pay = function(){
 
-    		$scope.paymentSuccessPopup().then(function(res){
-            	console.log("Paymnet Success");
-            });
+    		var paymentPopup = $scope.paymentSuccessPopup();
+
+            $timeout(function() {
+            	paymentPopup.close();
+            	$state.go('paymentSuccessPage');
+            }, 3000);
 		}
            
 

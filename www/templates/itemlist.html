@@ -1,4 +1,6 @@
+
 <ion-view>
+<div id="itemList">
 <div class="bar bar-subheader">
 	<div class="subheader-holder">
 	<!-- ng-switch for notification is included in this template  -->
@@ -12,8 +14,11 @@
 		</div>
 	</div>
 <ion-content>
-
-	<ion-list class="list inset-list has-subheader" can-swipe="true" option-buttons="itemButtons" >
+	<div class="emptyListPlaceholder" ng-show="items.length==0">
+		<p><i class="can ion-soup-can"></i><i class="ion-ios-cart"></i>Please scan the products into the cart</p>
+	</div>
+	<ion-list class="list inset-list has -subheader" can-swipe="true" option-buttons="itemButtons" >
+	
 	<ion-item ng-repeat="item in items">
 	<p>
 		<span class="itemname">{{item.name}}</span>
@@ -30,4 +35,5 @@
 			</ion-list>
 			</ion-content> 
   		 <a href="#/payment"class="button checkout-button"><i class="icon ion-ios-cart"></i></a>
+  </div>
  </ion-view>

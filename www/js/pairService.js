@@ -13,7 +13,7 @@ angular.module('uberKart')
     pairServiceInstance.socketConnectionCheckTimeout = 500; // check until this duration , Still socket connection not established , reject
 
     // TODO : this should be replaced with the reverse proxy url and nfc url.
-    pairServiceInstance.socketUrl = "http://192.168.2.7:8080/";
+    pairServiceInstance.socketUrl = "http://192.168.43.45:8080/";
 
 
     // Changing the nfc.addNdefListener which listens for NFCtags to promise 

@@ -1,4 +1,5 @@
-var app = require('express')();
+var express = require('express')
+var app = express();
 var request = require('request');
 var http = require('http');
 var server = http.Server(app);
@@ -33,10 +34,13 @@ app.get('/',function(req,res){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     functions.getUpcDetails(req.query.upc,res);  // Gets the UPC details and sends the response as json.
+
 });
+
+//
 
 /* Server runs at 8080 port */
 
-server.listen(80, function() {
-    console.log("listnening port 80");
+server.listen(8000, function() {
+    console.log("listnening port 8000");
 });

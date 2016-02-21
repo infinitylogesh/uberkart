@@ -10,7 +10,7 @@ angular.module('uberKart')
 
     $scope.total = 0;
 
-    var product1 = {
+   /* var product1 = {
         upc : 1234,
         name : "Snickers",
         price : 1,
@@ -33,61 +33,8 @@ angular.module('uberKart')
         qty : 1,
         promotions :["buy1get1"]
     };
-
-    var product4 = {
-        upc : 123456,
-        name : "Aasai",
-        price : 1,
-        qty : 1,
-        promotions :["buy1get1"]
-    };
-
-    var product5 = {
-        upc : 12346,
-        name : "Aasai",
-        price : 1,
-        qty : 1,
-        promotions :["buy1get1"]
-    };
-
-    var product6 = {
-        upc : 1236,
-        name : "Aasai",
-        price : 1,
-        qty : 1,
-        promotions :["buy1get1"]
-    };
-
-    var product8 = {
-        upc : 1231,
-        name : "Aasai",
-        price : 1,
-        qty : 1,
-        promotions :["buy1get1"]
-    };
-
-    var product7 = {
-        upc : 11,
-        name : "Aasai",
-        price : 1,
-        qty : 1,
-        promotions :["buy1get1"]
-    };
-
-    var product9 = {
-        upc : 123112,
-        name : "Aasai",
-        price : 1,
-        qty : 1,
-        promotions :["buy1get1"]
-    };
-
-
-    itemListService.updateList(product1,$scope);
-    itemListService.updateList(product2,$scope);
-    itemListService.updateList(product3,$scope);
-    console.log(itemListService.product);
-
+*/
+   
     // socket connection is established and newly recieved item are updated to the scope
     itemListService.listenForNewItem('nsp1',$scope);
 

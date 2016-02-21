@@ -12,7 +12,7 @@ angular.module('uberKart')
     		return pairPopup;
     	};
 
-    	/*$scope.showPopup().then(function(res){
+    /*	$scope.showPopup().then(function(res){
             	$state.go('itemlist');
             });*/
 

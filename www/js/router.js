@@ -31,6 +31,10 @@ angular.module('uberKart')
         .state('home', {
             url: '/home',
             templateUrl: 'templates/home.html'
+        })
+        .state('paymentSuccessPage', {
+            url: '/paymentSuccessPage',
+            templateUrl: 'templates/paymentSuccessPage.html'
         });
 
     $urlRouterProvider.otherwise('/home');
