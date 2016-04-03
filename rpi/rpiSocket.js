@@ -7,9 +7,11 @@ var spawn = require('child_process').spawn;
 var upc = null;
 
 
-//var nsp1 = io.of('/nsp1');
+var nsp1 = io.of('/nsp1');
 
-var barcodeScanner = spawn('python',['scanBarcode.py']);
+//var barcodeScanner = spawn('python',['scanBarcode.py']);
+
+var barcodeScanner = spawn('node',['--use_strict','rfid/rfid-serial.js']);
 
 barcodeScanner.stderr.on('data',function(data){
 		console.log("Scanner Error",data.toString());

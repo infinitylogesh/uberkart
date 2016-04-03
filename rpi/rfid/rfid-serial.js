@@ -1,34 +1,46 @@
 var SerialPort = require("serialport").SerialPort;
+var Firebase = require("firebase");
 var HYM360 = require("./HYM360.js");
 
+var fireRef = new Firebase('https://vivid-torch-1432.firebaseio.com/products');
 
-var sp = new SerialPort("/dev/ttyUSB0", {
-  baudrate: 115200
-}, true);
-
-sp.on("open",function(){
-	var writeData = new Buffer('a55a000d1a010000000b1d0d0a','hex'); // Initial command to start handshake communication.
-	console.log("serial open");
-	sp.write(writeData, function(err, results) {
-      console.log('err ' + err);
-      console.log(results);
-    });
-
-	sp.on("data",function(data){
-		var responseHex = data.toString('hex');
-		console.log(HYM360.parseResponse(responseHex)); // parse the response into RFID Tag ID  
-		if(responseHex == 'a55a00111b0100000000000000000b0d0a') // response from RFID for the initial handshake command.
-		{
-			console.log('start');
-			sp.write(HYM360.setContinousInventory(10000), function(err, results) { // Start continous inventory after successful handshake reponse from RFID
-      			console.log('err ' + err);
-      			console.log(results);
-    			});
-		}
-	});
-
-	
+fireRef.on("child_added",function(snapshot){
+	console.log(snapshot.val());
 });
+
+var product = { id: 128, name: 'rocher', price: 0.5 }
+
+fireRef.on("value",function(snapshot){
+	console.log(snapshot.val());
+});
+
+// var sp = new SerialPort("/dev/ttyUSB0", {
+//   baudrate: 115200
+// }, true);
+
+// sp.on("open",function(){
+// 	var writeData = new Buffer('a55a000d1a010000000b1d0d0a','hex'); // Initial command to start handshake communication.
+// 	console.log("serial open");
+// 	sp.write(writeData, function(err, results) {
+//       console.log('err ' + err);
+//       console.log(results);
+//     });
+
+// 	sp.on("data",function(data){
+// 		var responseHex = data.toString('hex');
+// 		console.log(HYM360.parseResponse(responseHex)); // parse the response into RFID Tag ID  
+// 		if(responseHex == 'a55a00111b0100000000000000000b0d0a') // response from RFID for the initial handshake command.
+// 		{
+// 			console.log('start');
+// 			sp.write(HYM360.setContinousInventory(10000), function(err, results) { // Start continous inventory after successful handshake reponse from RFID
+//       			console.log('err ' + err);
+//       			console.log(results);
+//     			});
+// 		}
+// 	});
+// });
+
+
 
 // a55a000d1a010000
 // 000b1d0d0a

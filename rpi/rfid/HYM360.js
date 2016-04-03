@@ -6,7 +6,7 @@ const CMD = {
 	hardwareVersion : '00'
 };
 
-var HYM360 = class{
+var HYM360 = {
 
 /*  
 	toHex : Converts the value passed into Hex and adds zeroes before based on the bytes required.
@@ -18,7 +18,7 @@ toHex(value,noOfBytes){
 	zeroPaddingCount = (noOfBytes*2) - hexValue.length;
 	hexValue = ('0').repeat(zeroPaddingCount) + hexValue; // adding zeros before if hex value is not even.
 	return hexValue;
-}
+},
 
 /*  
 	Hex frame to be written to RFID module is constructed here.
@@ -30,7 +30,7 @@ getHexFrame(data,command){
 		var frameLength = 2+2+1+(data.toString().length / 2)+1+2, // Start byte + Length + Commant + data + Check digit + End byte
 		frame = CMD.startFrame + '00' +this.toHex(frameLength,1) + command + data + 'BF' + CMD.endFrame;
 		return Buffer(frame,'hex');
-}
+},
 
 /*
    Function to get the Hex frame for continous inventory.
@@ -41,7 +41,7 @@ setContinousInventory(numOfTimes){	// numofTime = 00
 	 var value =  this.getHexFrame(this.toHex(numOfTimes,2),CMD.continousInventory);
 	 console.log(value);
 	 return value;
-}
+},
 
 /*
    Function to parse the response from RFID.
@@ -65,7 +65,7 @@ parseResponse(response){
 	}
 
 	console.log("Unknown response :" + response);
-}
+},
 
 getEPCData(data){
 
@@ -75,4 +75,4 @@ getEPCData(data){
 
 };
 
-module.exports = new HYM360();
+module.exports =  HYM360;
