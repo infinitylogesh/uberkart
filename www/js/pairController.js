@@ -16,26 +16,12 @@ angular.module('uberKart')
             	$state.go('itemlist');
             });*/
 
-        pairService.getNfcTag().then(function(nfcTag) { // if NFC Tag is detected.
+        pairService.getNfcTag().then(function(nfcTag) { // if NFC Tag is detected go to itemList.
             console.log(nfcTag);
-            return pairService.initializeSocket();
+            $state.go('itemlist');
         }, function(error) {
             $scope.showPopup().then(function(res){
             	console.log("NFC failed");
-            });
-        }).then(function(socket) {   // Establish Socket connection if NFC tag is detected
-        	console.log(socket);
-            return pairService.socketConnectionTest(socket);
-        }, function() {
-             $scope.showPopup().then(function(res){
-            	console.log("Socket connection failed");
-            });
-        }).then(function(msg) {   // If Socket handshake is successful , Change to itemlist screen.
-            console.log("Handshake Success!");
-            $state.go('itemlist');
-        }, function() {
-            $scope.showPopup().then(function(res){
-            	console.log("Handhsake failed");
             });
         });
 
