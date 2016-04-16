@@ -72,5 +72,11 @@ angular.module('uberKart')
             $scope.toggleEditQty[$index] = !$scope.toggleEditQty[$index]; // stub to enable add and reduce quantity button. Remove it.
             itemListService.removeProduct($scope,$index);  // service function to reduce the quantity and re apply promotion , total saved and total.
         }
+
+        $scope.passScope = function(){
+            console.log("Passing scope!");
+            itemListService.itemList = $scope.items;
+            return true;
+        }
     }
 ]);

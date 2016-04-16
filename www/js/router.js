@@ -18,7 +18,7 @@ angular.module('uberKart')
             templateUrl: 'templates/payment.html',
             controller : 'paymentController',
             resolve: {	// Makes the socket from pair state is passed to itemlist state.
-                total : function(itemListService) {
+                transaction : function(itemListService) {
                     return itemListService.passTotal2Payment(); 
                 }
             }

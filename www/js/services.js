@@ -42,6 +42,8 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
     var firebaseURL = "https://vivid-torch-1432.firebaseio.com/";
     var cartID = "abc"; // Cart ID stub. Should be returned after pairing.
 
+    serviceInstance.itemList = {};
+
 
     /*  ------------------  */
     /*  Notification Start */
@@ -296,8 +298,14 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
 
     serviceInstance.passTotal2Payment = function(){
         var dfd = $q.defer(),
-        self = this;
-        dfd.resolve(self.total);
+        self = this,
+        transaction = {};
+        transaction.total = self.total;
+        transaction.itemList = self.itemList;
+        transaction.cartID = cartID;
+        transaction.user = "Logesh";
+        dfd.resolve(transaction);
+        console.log(self);
         return dfd.promise;
     }
 
