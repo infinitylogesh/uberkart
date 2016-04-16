@@ -216,7 +216,7 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
         var ref = self.initializeFirebase('productAdded'),
         refProducts = self.initializeFirebase('productDetails');
         ref.on('child_added',function(snap){
-            refProducts.child(snap.val().product).on("value",function(snap2){
+            refProducts.child(snap.val().upc).on("value",function(snap2){
                     upcDetails = snap2.val();
                     upcDetails.promotions = ["buy2get1"]; // Empty promotion is added.
                     upcDetails.qty = 1; // Qty is defaulted to 1.
@@ -224,6 +224,11 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
                     self.updateList(upcDetails, $scope);
             });
             console.log(snap.val());
+        });
+
+        ref.on('child_removed',function(snap){
+            var index = self.compareList(snap.val(), $scope.items);
+            self.removeProduct($scope,index);
         });
         //socket = $scope.socket;
         // console.log("$scope.socket",$scope.socket);
@@ -322,6 +327,29 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
                 break;
         } 
     }
+
+    // Function to reduce the quantity of the existing product when it is removed
+    // and re apply promotion , total saved and total.
+
+    serviceInstance.removeProduct = function($scope,$index){
+
+        var self = this;
+
+        if ($scope.items[$index].qty >= 1) {
+                $scope.qtyDecreasing = true; // to avoid promotion notification when product qty reached eligible qty after qty reduction.
+                self.notifyProductRemoval($scope,$scope.items[$index]);
+                $scope.items[$index].qty--;
+                self.applyPromotion($scope.items[$index],$scope);
+                $scope.total = self.calculateItemTotal($scope.items);
+                $scope.amountSaved = self.calculateTotalAmountSaved($scope.items);
+            }
+
+            // To highlight the change in quantity. Class will be removed after the timeout. 
+            $scope.quantityChanged[$index] = "quantity-animation";
+            $timeout(function() {
+                $scope.quantityChanged[$index] = null;
+            }, 200);
+        }
 
     return serviceInstance;
 });

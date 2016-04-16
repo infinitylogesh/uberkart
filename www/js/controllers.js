@@ -72,24 +72,7 @@ angular.module('uberKart')
         $scope.decreaseQty = function($index) {
             
             $scope.toggleEditQty[$index] = !$scope.toggleEditQty[$index]; // stub to enable add and reduce quantity button. Remove it.
-
-            $scope.qtyDecreasing = true;
-
-            if ($scope.items[$index].qty >= 1) {
-                itemListService.notifyProductRemoval($scope,$scope.items[$index]);
-                $scope.items[$index].qty--;
-                itemListService.applyPromotion($scope.items[$index],$scope);
-                $scope.total = itemListService.calculateItemTotal($scope.items);
-                $scope.amountSaved = itemListService.calculateTotalAmountSaved($scope.items);
-            }
-
-            // To highlight the change in quantity. Class will be removed after the timeout. 
-            $scope.quantityChanged[$index] = "quantity-animation";
-            $timeout(function() {
-                $scope.quantityChanged[$index] = null;
-            }, 200);
+            itemListService.removeProduct($scope,$index);  // service function to reduce the quantity and re apply promotion , total saved and total.
         }
-
-
     }
 ]);
