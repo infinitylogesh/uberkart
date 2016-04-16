@@ -11,13 +11,8 @@ angular.module('uberKart')
         .state('itemlist', {
             url: '/itemlist',
             templateUrl: 'templates/itemlist.html',
-            controller: 'ItemListController',
-            resolve: {	// Makes the socket from pair state is passed to itemlist state.
-                pairSocket: function(pairService) {
-                    return pairService.initializeSocket(); 
-                }
-            }
-        })
+            controller: 'ItemListController'
+            })
         .state('payment', {
             url: '/payment',
             templateUrl: 'templates/payment.html',

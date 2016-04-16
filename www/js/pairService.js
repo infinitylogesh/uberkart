@@ -10,11 +10,6 @@ angular.module('uberKart')
     var pairServiceInstance = {};
 
     pairServiceInstance.nfcTag = null;
-    pairServiceInstance.socketConnectionCheckTimeout = 500; // check until this duration , Still socket connection not established , reject
-
-    // TODO : this should be replaced with the reverse proxy url and nfc url.
-    pairServiceInstance.socketUrl = "http://192.168.43.45:8080/";
-
 
     // Changing the nfc.addNdefListener which listens for NFCtags to promise 
     pairServiceInstance.getNfcTag = function() {
@@ -33,35 +28,7 @@ angular.module('uberKart')
         });
         return dfd.promise;
     }
-
-    // Socket is initialized. Beware that the initialized socket mostly be not connected and empty.
-    pairServiceInstance.initializeSocket = function() {
-        var dfd = $q.defer();
-        socket = io.connect(this.socketUrl);
-        dfd.resolve(socket);
-        return dfd.promise;
-    }
-
-    // If socket connection is not made even after socketConnectionCheckTimeout promise is rejected. 
-    //  If handshake message is recieved promise is resolved.
-    pairServiceInstance.socketConnectionTest = function(socket) {
-        var dfd = $q.defer(),
-            self = this;
-
-        // if handshake message is recieved , Resolve the promise.   
-        socket.on("handshake", function(msg) {
-            dfd.resolve(msg);
-        });
-
-        // if socket connection is not established in 500ms reject the promise   
-        $timeout(function() {
-            if (socket.connected != true) {
-                dfd.reject("msg");
-            }
-        }, self.socketConnectionCheckTimeout);
-
-        return dfd.promise;
-    }
+   
 
     //1. get nfc tag and concatenate with the url to form socket url
     //2. initialize a socket connection.

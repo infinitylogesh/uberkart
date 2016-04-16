@@ -209,7 +209,7 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
 
     // On arrival of the new item from the cart , UpdateList function is called
     // Update the list based on the content.
-    serviceInstance.listenForNewItem = function(namespace, $scope) {
+    serviceInstance.listenForNewItem = function($scope) {
 
         var self = this;
         var upcDetails = {};
@@ -230,20 +230,6 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
             var index = self.compareList(snap.val(), $scope.items);
             self.removeProduct($scope,index);
         });
-        //socket = $scope.socket;
-        // console.log("$scope.socket",$scope.socket);
-        //     socket.on('clientMessage', function(msg) {
-        //         console.log(msg);
-        //         console.log(Date());
-                // $http.get(upcGetURL + msg).then(function(resp) {
-                //     upcDetails = resp.data;
-                //     console.log(upcDetails);
-                //     self.updateList(upcDetails, $scope); // Without $scope.$apply , Be cautious to check the update the binding changes in the UI 
-                // }, function(err) {
-                //     console.log("Get Error", err);
-                // });
-            // });
-
     }
 
     // Original item list in the scope and new item recived in socket is
