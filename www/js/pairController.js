@@ -16,6 +16,8 @@ angular.module('uberKart')
             	$state.go('itemlist');
             });*/
 
+        $state.go('itemlist'); // chumma added for browser debugging and to bypass nfc.
+
         pairService.getNfcTag().then(function(nfcTag) { // if NFC Tag is detected go to itemList.
             console.log(nfcTag);
             $state.go('itemlist');

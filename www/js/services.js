@@ -16,8 +16,8 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
         promotionText: "Buy 1 and Get 1 Free"
     }, {
         promotion: "buy2get1",
-        eligibleQty: 3,
-        freeQty: 2,
+        eligibleQty: 2,
+        freeQty: 1,
         promotionText: "Buy 2 and Get 1 Free"
     }];
 
@@ -39,6 +39,8 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
     };
 
     var upcGetURL = "http://lilthings.co:8000/?upc="
+    var firebaseURL = "https://vivid-torch-1432.firebaseio.com/";
+    var cartID = "abc"; // Cart ID stub. Should be returned after pairing.
 
 
     /*  ------------------  */
@@ -211,19 +213,31 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
 
         var self = this;
         var upcDetails = {};
-        socket = $scope.socket;
-        console.log("$scope.socket",$scope.socket);
-            socket.on('clientMessage', function(msg) {
-                console.log(msg);
-                console.log(Date());
-                $http.get(upcGetURL + msg).then(function(resp) {
-                    upcDetails = resp.data;
+        var ref = self.initializeFirebase('productAdded'),
+        refProducts = self.initializeFirebase('productDetails');
+        ref.on('child_added',function(snap){
+            refProducts.child(snap.val().product).on("value",function(snap2){
+                    upcDetails = snap2.val();
+                    upcDetails.promotions = ["buy2get1"]; // Empty promotion is added.
+                    upcDetails.qty = 1; // Qty is defaulted to 1.
                     console.log(upcDetails);
-                    self.updateList(upcDetails, $scope); // Without $scope.$apply , Be cautious to check the update the binding changes in the UI 
-                }, function(err) {
-                    console.log("Get Error", err);
-                });
+                    self.updateList(upcDetails, $scope);
             });
+            console.log(snap.val());
+        });
+        //socket = $scope.socket;
+        // console.log("$scope.socket",$scope.socket);
+        //     socket.on('clientMessage', function(msg) {
+        //         console.log(msg);
+        //         console.log(Date());
+                // $http.get(upcGetURL + msg).then(function(resp) {
+                //     upcDetails = resp.data;
+                //     console.log(upcDetails);
+                //     self.updateList(upcDetails, $scope); // Without $scope.$apply , Be cautious to check the update the binding changes in the UI 
+                // }, function(err) {
+                //     console.log("Get Error", err);
+                // });
+            // });
 
     }
 
@@ -265,6 +279,7 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
 
 
     // Based on the item recived , item List is updated. 
+    // If the item is already added . Qty is updated otherwise . Item is pushed to the array.
     serviceInstance.updateList = function(newItem, $scope) {
 
         var self = this,
@@ -283,6 +298,7 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
         self.applyPromotion(newItem, $scope);
         $scope.total = self.calculateItemTotal($scope.items);
         $scope.amountSaved = self.calculateTotalAmountSaved($scope.items);
+        $scope.$apply();
         return $scope;
 
     }
@@ -292,6 +308,19 @@ angular.module('uberKart', ['ionic', 'ngAnimate'])
         self = this;
         dfd.resolve(self.total);
         return dfd.promise;
+    }
+
+    // A function to return firebase reference based on the action performed.
+
+    serviceInstance.initializeFirebase = function(action){
+        switch(action){
+            case 'productAdded':
+                return (new Firebase(firebaseURL+'/cart/'+cartID));
+                break;
+            case 'productDetails':
+                return (new Firebase(firebaseURL+'/products'));
+                break;
+        } 
     }
 
     return serviceInstance;
